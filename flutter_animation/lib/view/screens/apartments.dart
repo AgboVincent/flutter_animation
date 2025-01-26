@@ -55,41 +55,41 @@ class _AnimatedBoxLayoutState extends State<AnimatedBoxLayout>
         });
       });
 
-       Future.delayed(const Duration(milliseconds: 1000), () {
+      Future.delayed(const Duration(milliseconds: 1000), () {
+          setState(() {
+            _containerWidthThree = 170.w; 
+          });
+
+           Future.delayed(const Duration(milliseconds: 900), () {
+            setState(() {
+            _showText3 = true;
+            });
+          });
+        });
+
+
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        setState(() {
+          _containerWidthFour = 170.w; 
+        });
+
+         Future.delayed(const Duration(milliseconds: 700), () {
+          setState(() {
+          _showText4 = true;
+          });
+      });
+      });
+
+       Future.delayed(const Duration(milliseconds: 1500), () {
         setState(() {
           _containerWidthTwo = 170.w; 
         });
 
          Future.delayed(const Duration(milliseconds: 700), () {
-        setState(() {
-        _showText2 = true;
+          setState(() {
+          _showText2 = true;
+          });
         });
-      });
-
-        Future.delayed(const Duration(milliseconds: 800), () {
-        setState(() {
-          _containerWidthThree = 170.w; 
-        });
-      });
-
-        Future.delayed(const Duration(milliseconds: 700), () {
-        setState(() {
-        _showText3 = true;
-        });
-      });
-
-      Future.delayed(const Duration(milliseconds: 800), () {
-        setState(() {
-          _containerWidthFour = 170.w; 
-        });
-      });
-
-        Future.delayed(const Duration(milliseconds: 700), () {
-        setState(() {
-        _showText4 = true;
-        });
-      });
-      
       });
      });
 
@@ -159,7 +159,7 @@ class _AnimatedBoxLayoutState extends State<AnimatedBoxLayout>
                           child: Stack(
                             children: [
                               Container(
-                                height: 280.h,
+                                height: 285.h,
                                 margin: const EdgeInsets.only(bottom: 20),
                                 decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -249,43 +249,42 @@ class _AnimatedBoxLayoutState extends State<AnimatedBoxLayout>
   Widget animatedContainer({required String title, required bool showText, required double containerWidth, TextAlign? textAlign}) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 800),
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.only(left: 8, right: 4),
       margin: const EdgeInsets.only(right: 8),
       width: containerWidth,
-      height: 60,
+      height: 50,
       decoration: BoxDecoration(
         color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(25),
       ),
-      child: Center(
-        child: ListTile(
-          contentPadding: EdgeInsets.zero,
-          trailing: Container(
-            padding: const EdgeInsets.all(0),
-            height: 40,
-            width: 40,
-            decoration: const  BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle
-            ),
-            child: const Icon(
-              Icons.arrow_forward_ios,
-              color: Color.fromARGB(255, 158, 146, 118),
-            ),
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        trailing: Container(
+          margin: const EdgeInsets.only(bottom: 6),
+          height: 40,
+          width: 40,
+          decoration: const  BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle
           ),
-          title: AnimatedOpacity(
-            duration: const Duration(milliseconds: 500),
-            opacity: showText ? 1.0 : 0.0,
-            child:  Text(
-              title,
-              textAlign: textAlign ?? TextAlign.start,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-                color: const Color.fromARGB(255, 185, 181, 172),
-               ),
-              ),
+          child: const Icon(
+            Icons.arrow_forward_ios,
+            color: Color.fromARGB(255, 158, 146, 118),
+            size: 14,
           ),
+        ),
+        title: AnimatedOpacity(
+          duration: const Duration(milliseconds: 500),
+          opacity: showText ? 1.0 : 0.0,
+          child:  Text(
+            title,
+            textAlign: textAlign ?? TextAlign.start,
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+              color: const Color.fromARGB(255, 185, 181, 172),
+             ),
+            ),
         ),
       ),
     );

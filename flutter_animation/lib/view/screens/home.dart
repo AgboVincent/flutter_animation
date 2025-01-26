@@ -41,7 +41,7 @@ class _AnimatedPageState extends State<AnimatedPage> with SingleTickerProviderSt
   void _scrollToTop() {
     _scrollController.animateTo(
       0.0,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       curve: Curves.easeInOut,
     );
   }
@@ -52,6 +52,11 @@ class _AnimatedPageState extends State<AnimatedPage> with SingleTickerProviderSt
       duration: const Duration(seconds: 1),
       curve: Curves.easeInOut,
     );
+    Future.delayed(const Duration(milliseconds: 1700), () {
+        setState(() {
+          _showFab = true;
+        });
+      });
   }
 
 
@@ -281,7 +286,7 @@ Future<void> _animateLines() async {
                   if (_showApartment)
                   const AnimatedBoxLayout(),
                   if(_showFab)
-                  SlidingFabWithItems()
+                  const SlidingFabWithItems()
                   
               ],
             ),

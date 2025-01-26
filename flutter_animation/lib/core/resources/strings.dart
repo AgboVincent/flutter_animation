@@ -11,5 +11,5 @@ class AppStrings{
   static const String locationOne = "Gladkova St..,, 25";
   static const String locationTwo = "Nevsky, 20";
   static const String locationThree = "Vasilevsky, 5";
-  static const String locationFour = "Moskovsky, 10";
+  static const String locationFour = "Mkovsky, 10";
 }
