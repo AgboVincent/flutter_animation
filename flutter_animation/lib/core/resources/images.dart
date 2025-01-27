@@ -7,4 +7,5 @@ class AppImages{
   static const String image3 = 'assets/images/real_ety3.png';
   static const String image4 = 'assets/images/real_ety4.png';
   static const String profileImage = 'assets/images/profile_image.png';
+  static const String mapImage = 'assets/images/map_background.png';
 }

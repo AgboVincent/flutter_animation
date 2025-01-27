@@ -60,7 +60,7 @@ class _AnimatedBoxLayoutState extends State<AnimatedBoxLayout>
             _containerWidthThree = 170.w; 
           });
 
-           Future.delayed(const Duration(milliseconds: 900), () {
+           Future.delayed(const Duration(milliseconds: 700), () {
             setState(() {
             _showText3 = true;
             });
@@ -73,7 +73,7 @@ class _AnimatedBoxLayoutState extends State<AnimatedBoxLayout>
           _containerWidthFour = 170.w; 
         });
 
-         Future.delayed(const Duration(milliseconds: 700), () {
+         Future.delayed(const Duration(milliseconds: 600), () {
           setState(() {
           _showText4 = true;
           });
@@ -85,7 +85,7 @@ class _AnimatedBoxLayoutState extends State<AnimatedBoxLayout>
           _containerWidthTwo = 170.w; 
         });
 
-         Future.delayed(const Duration(milliseconds: 700), () {
+         Future.delayed(const Duration(milliseconds: 600), () {
           setState(() {
           _showText2 = true;
           });
@@ -111,16 +111,9 @@ class _AnimatedBoxLayoutState extends State<AnimatedBoxLayout>
               position: _animation,
               child: Container(
                  padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
+                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.grey[200],
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.black.withOpacity(0.1),
-                  //     blurRadius: 10,
-                  //     spreadRadius: 5,
-                  //   ),
-                  // ],
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -248,44 +241,50 @@ class _AnimatedBoxLayoutState extends State<AnimatedBoxLayout>
   }
   Widget animatedContainer({required String title, required bool showText, required double containerWidth, TextAlign? textAlign}) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 800),
-      padding: const EdgeInsets.only(left: 8, right: 4),
+      duration: const Duration(milliseconds: 600),
+      padding: const EdgeInsets.only(left: 8, right: 4), 
       margin: const EdgeInsets.only(right: 8),
       width: containerWidth,
-      height: 50,
+      height: 36.h,
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(25),
       ),
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        trailing: Container(
-          margin: const EdgeInsets.only(bottom: 6),
-          height: 40,
-          width: 40,
-          decoration: const  BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle
-          ),
-          child: const Icon(
-            Icons.arrow_forward_ios,
-            color: Color.fromARGB(255, 158, 146, 118),
-            size: 14,
-          ),
-        ),
-        title: AnimatedOpacity(
-          duration: const Duration(milliseconds: 500),
-          opacity: showText ? 1.0 : 0.0,
-          child:  Text(
-            title,
-            textAlign: textAlign ?? TextAlign.start,
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: const Color.fromARGB(255, 185, 181, 172),
-             ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Gap(10),
+          Expanded(
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 500),
+              opacity: showText ? 1.0 : 0.0,
+              child: Text(
+                title,
+                textAlign: textAlign ?? TextAlign.start,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: const Color.fromARGB(255, 185, 181, 172),
+                ),
+              ),
             ),
-        ),
+          ),
+          const Gap(10),
+          Container(
+            margin: const EdgeInsets.only(bottom: 0),
+            height: 40,
+            width: 40,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.arrow_forward_ios,
+              color: Color.fromARGB(255, 158, 146, 118),
+              size: 14,
+            ),
+          ),
+        ],
       ),
     );
   }

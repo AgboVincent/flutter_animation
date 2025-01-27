@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animation/view/screens/home.dart';
+import 'package:flutter_animation/view/pages/pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'core/routes/routes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child:MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
       builder: (_, child){
         return  MaterialApp(
           title: 'Flutter Demo',
+          routes: customRoutes,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             textTheme:   GoogleFonts.poppinsTextTheme(textTheme).copyWith(
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: const AnimatedPage(),
+          home: const PagesScreen(),
         );
       }
     );

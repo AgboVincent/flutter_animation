@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/resources/images.dart';
 import 'package:flutter_animation/core/resources/strings.dart';
-import 'package:flutter_animation/view/screens/apartments.dart';
-import 'package:flutter_animation/view/screens/bottom_nav.dart';
+import 'package:flutter_animation/view/widgets/apartments.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AnimatedPage extends StatefulWidget {
+import '../../controller/app_controller.dart';
+import '../widgets/box_count.dart';
+import '../widgets/text_line.dart';
+
+class AnimatedPage extends ConsumerStatefulWidget {
   const AnimatedPage({super.key}); 
 
   @override
-  State<AnimatedPage> createState() => _AnimatedPageState();
+  ConsumerState<AnimatedPage> createState() => _AnimatedPageState();
 }
-
-class _AnimatedPageState extends State<AnimatedPage> with SingleTickerProviderStateMixin {
+ bool showFab = false;
+class _AnimatedPageState extends ConsumerState<AnimatedPage> with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   int maxNumber1 = 1034;
   int maxNumber2 = 2212;
@@ -29,7 +33,6 @@ class _AnimatedPageState extends State<AnimatedPage> with SingleTickerProviderSt
   bool _showGreetings = false;
   bool _showCounter = false;
   bool _showApartment = false;
-  bool _showFab = false;
 
   final List<String> _lines = [
     AppStrings.description1,
@@ -38,7 +41,7 @@ class _AnimatedPageState extends State<AnimatedPage> with SingleTickerProviderSt
 
   final List<String> _visibleLines = [];
 
-  void _scrollToTop() {
+  void scrollToTop() {
     _scrollController.animateTo(
       0.0,
       duration: const Duration(seconds: 1),
@@ -54,7 +57,8 @@ class _AnimatedPageState extends State<AnimatedPage> with SingleTickerProviderSt
     );
     Future.delayed(const Duration(milliseconds: 1700), () {
         setState(() {
-          _showFab = true;
+          showFab = true;
+          ref.read(bottomNavProvider.notifier).state = true;
         });
       });
   }
@@ -138,7 +142,7 @@ Future<void> _animateLines() async {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 20.0, bottom:20),
+          padding: const EdgeInsets.only(top: 20.0),
           child: SingleChildScrollView(
             controller: _scrollController,
             child: Column(
@@ -285,9 +289,6 @@ Future<void> _animateLines() async {
                   ),
                   if (_showApartment)
                   const AnimatedBoxLayout(),
-                  if(_showFab)
-                  const SlidingFabWithItems()
-                  
               ],
             ),
           ),
@@ -298,135 +299,6 @@ Future<void> _animateLines() async {
 }
 
 
-class BoxWithCounter extends StatelessWidget {
-  final int? count;
-  final double? size;
-  final BoxShape shape;
-  final Color? color;
-
-  const BoxWithCounter({
-    required this.count,
-    required this.size, 
-    required this.shape,
-    required this.color,
-    super.key
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      height: 150.h,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: shape == BoxShape.circle ? 
-        null: BorderRadius.circular(30),
-        shape: shape
-      ),
-      child: Column(
-        children: [
-          Gap(20.h),
-           Text(
-            shape == BoxShape.circle ? AppStrings.buy: AppStrings.rent,
-            style: TextStyle(
-              fontSize: 12.sp, 
-              fontWeight: FontWeight.w600,
-              color: shape == BoxShape.circle ? 
-              Colors.white : const Color.fromARGB(255, 137, 122, 90),
-            ),
-          ),
-          Gap(20.h),
-          Center(
-            child: Text(
-              '$count',
-              style: TextStyle(
-                fontSize: 30.sp, 
-                fontWeight: FontWeight.w600,
-                color: shape == BoxShape.circle ? 
-                Colors.white : const Color.fromARGB(255, 137, 122, 90),
-              ),
-            ),
-          ),
-          Gap(4.h),
-           Text(
-            AppStrings.offers,
-            style: TextStyle(
-              fontSize: 12.sp, 
-              fontWeight: FontWeight.w600,
-              color: shape == BoxShape.circle ? 
-              Colors.white : const Color.fromARGB(255, 137, 122, 90),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 
-class AnimatedTextLine extends StatefulWidget {
-  final String text;
-
-  const AnimatedTextLine({super.key, required this.text});
-
-  @override
-  State<AnimatedTextLine> createState() => _AnimatedTextLineState();
-}
-
-class _AnimatedTextLineState extends State<AnimatedTextLine>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _opacityAnimation;
-  late Animation<Offset> _positionAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-
-    _opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
-
-    _positionAnimation = Tween<Offset>(
-      begin: const Offset(0, 1),
-      end: const Offset(0, 0), 
-    ).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
-
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _opacityAnimation,
-      child: SlideTransition(
-        position: _positionAnimation,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0.0),
-          child: Text(
-            widget.text,
-            style: TextStyle(
-              fontSize: 28.sp,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 

@@ -4,7 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import '../../core/resources/icons.dart';
 
 class SlidingFabWithItems extends StatefulWidget {
-  const SlidingFabWithItems({super.key});
+  const SlidingFabWithItems({
+    this.onIconClicked,
+    super.key
+  });
+  final Function(int val)? onIconClicked;  
   @override
   State<SlidingFabWithItems>createState() => _SlidingFabWithItemsState();
 }
@@ -26,7 +30,7 @@ class _SlidingFabWithItemsState extends State<SlidingFabWithItems>
 
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, 1), 
-      end: const Offset(0, -1),  
+      end: const Offset(0, -0.5),  
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeOut,
@@ -65,6 +69,7 @@ class _SlidingFabWithItemsState extends State<SlidingFabWithItems>
                         setState(() {
                           selectedNavIndex = index;
                         });
+                        widget.onIconClicked!(selectedNavIndex);
                       },
                       child: NavItems(
                         icon: bottomNavItems[index].icon,
